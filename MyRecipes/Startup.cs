@@ -57,7 +57,7 @@ namespace MyRecipes
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Recipes}/{action=Overview}/{id?}");
             });
         }
     }
