@@ -10,17 +10,7 @@
 <p style="text-align:center">@Model.Description</p>
 
 <h2>Ingredients</h2>
-<ul>
-    @foreach (var ingredient in @Model.Ingredients)
-    {
-        <li>@ingredient</li>
-    }
-</ul>
+<p>@Model.Ingredients</p>
 
 <h2>Directions:</h2>
-<ol>
-    @foreach (var direction in @Model.Directions)
-    {
-        <li>@direction</li>
-    }
-</ol>
+<p>@Model.Directions</p>

@@ -1,4 +1,13 @@
-﻿
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{ 
+    var homeActive = ViewBag.Title == "Home" ? "active" : "";
+    var aboutIsActive = ViewBag.Title == "About Us" ? "active" : "";
+    var contactIsActive = ViewBag.Title == "Contact Us" ? "active" : "";
+    var createIsActive = ViewBag.Title == "Create" ? "active" : "";
+}
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,20 +18,23 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/Recipes/Overview">My Recipes</a>
+        <a class="navbar-brand" asp-controller="Recipes" asp-action="Overview">My Recipes</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Recipes/Overview">Home</a>
+                <li class="nav-item @homeActive ">
+                    <a class="nav-link" asp-controller="Recipes" asp-action="Overview">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Info/AboutUs">About Us</a>
+                <li class="nav-item @aboutIsActive">
+                    <a class="nav-link" asp-controller="Info" asp-action="AboutUs">About Us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Info/ContactUs">Contact Us</a>
+                <li class="nav-item @contactIsActive">
+                    <a class="nav-link" asp-controller="Info" asp-action="ContactUs">Contact Us</a>
+                </li>
+                <li class="nav-item @createIsActive">
+                    <a class="nav-link" asp-controller="Recipes" asp-action="Create">Create recipe</a>
                 </li>
             </ul>
         </div>

@@ -1,24 +1,28 @@
 ﻿using MyRecipes.Models;
-using MyRecipes.Repository;
-using System;
+using MyRecipes.Repository.Interfaces;
+using MyRecipes.Services.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MyRecipes.Services
 {
-    public class RecipesService
+    public class RecipesService : IRecipesService
     {
+        public IRecipeRepository RecipesRepo{ get; set; }
+
+        public RecipesService(IRecipeRepository recipesRepo)
+        {
+            RecipesRepo = recipesRepo;
+        }
+
         public List<Recipe> GetAll()
         {
-            var recipeRepository = new RecipeRepository();
-            var recipes = recipeRepository.GetAll();
+            var recipes = RecipesRepo.GetAll();
             return recipes;
         }
 
         public Recipe GetById(int id)
         {
-            var recipeRepository = new RecipeRepository();
-            var recipe = recipeRepository.GetById(id);
+            var recipe = RecipesRepo.GetById(id);
             return recipe;
         }
     }
