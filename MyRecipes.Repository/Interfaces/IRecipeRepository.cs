@@ -6,7 +6,7 @@ namespace MyRecipes.Repository.Interfaces
     public interface IRecipeRepository
     {
         List<Recipe> GetAll();
-
         Recipe GetById(int id);
+        void Add(Recipe recipe);
     }
 }

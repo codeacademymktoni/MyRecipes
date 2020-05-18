@@ -49,5 +49,13 @@ namespace MyRecipes.Repository
         {
             return Recipes.FirstOrDefault(x => x.Id == id);
         }
+
+        public void Add(Recipe recipe)
+        {
+            var recipes = GetAll();
+            var maxId = recipes.Max(x => x.Id);
+            recipe.Id = maxId + 1;
+            Recipes.Add(recipe);
+        }
     }
 }

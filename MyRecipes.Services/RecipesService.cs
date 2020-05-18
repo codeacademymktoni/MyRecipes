@@ -25,5 +25,10 @@ namespace MyRecipes.Services
             var recipe = RecipesRepo.GetById(id);
             return recipe;
         }
+
+        public void CreateRecipe(Recipe recipe)
+        {
+            RecipesRepo.Add(recipe);
+        }
     }
 }

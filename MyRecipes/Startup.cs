@@ -37,7 +37,7 @@ namespace MyRecipes
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSingleton<IRecipeRepository, RecipeFileRepository>();
+            services.AddSingleton<IRecipeRepository, RecipeSqlRepository>();
             services.AddSingleton<IRecipesService, RecipesService>();
 
         }

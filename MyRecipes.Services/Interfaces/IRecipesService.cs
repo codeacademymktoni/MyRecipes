@@ -7,5 +7,6 @@ namespace MyRecipes.Services.Interfaces
     {
         List<Recipe> GetAll();
         Recipe GetById(int id);
+        void CreateRecipe(Recipe recipe);
     }
 }

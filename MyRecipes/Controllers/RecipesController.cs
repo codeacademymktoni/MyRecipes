@@ -27,6 +27,7 @@ namespace MyRecipes.Controllers
             return View(recipe);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             var recipe = new Recipe();
@@ -36,8 +37,15 @@ namespace MyRecipes.Controllers
         [HttpPost]
         public IActionResult Create(Recipe recipe)
         {
-            //call service to create new recipe;
-            return RedirectToAction("Overview");
+            if (ModelState.IsValid)
+            {
+                RecipesService.CreateRecipe(recipe);
+                return RedirectToAction("Overview");
+            }
+            else
+            {
+                return View(recipe);
+            }
         }
     }
 }
