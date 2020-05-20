@@ -9,7 +9,21 @@ namespace MyRecipes.Repository
     {
         public void Add(Recipe recipe)
         {
-            throw new System.NotImplementedException();
+            using (var cnn = new SqlConnection("Data Source=.\\SQLEXPRESS; Initial Catalog = MyRecipesSqlDemo; Integrated Security = true"))
+            {
+                cnn.Open();
+                var query = @"insert into Recipes (Title, Description, ImageUrl, Ingredients, Directions)
+                              values(@Title, @Description, @ImageUrl, @Ingredients, @Directions)";
+
+                var cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@Title", recipe.Title);
+                cmd.Parameters.AddWithValue("@Description", recipe.Description);
+                cmd.Parameters.AddWithValue("@ImageUrl", recipe.ImageUrl);
+                cmd.Parameters.AddWithValue("@Ingredients", recipe.Ingredients);
+                cmd.Parameters.AddWithValue("@Directions", recipe.Directions);
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public List<Recipe> GetAll()
@@ -50,7 +64,8 @@ namespace MyRecipes.Repository
             {
                 cnn.Open();
 
-                var cmd = new SqlCommand($"SELECT * FROM Recipes where id = {id}", cnn);
+                var cmd = new SqlCommand($"SELECT * FROM Recipes where id = @Id", cnn);
+                cmd.Parameters.AddWithValue("@Id", id);
 
                 var reader = cmd.ExecuteReader();
 

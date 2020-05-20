@@ -7,7 +7,7 @@ namespace MyRecipes.Services
 {
     public class RecipesService : IRecipesService
     {
-        public IRecipeRepository RecipesRepo{ get; set; }
+        public IRecipeRepository RecipesRepo { get; set; }
 
         public RecipesService(IRecipeRepository recipesRepo)
         {
