@@ -30,5 +30,11 @@ namespace MyRecipes.Services
         {
             RecipesRepo.Add(recipe);
         }
+
+        public List<Recipe> GetByTitle(string title)
+        {
+            var recipes = RecipesRepo.GetByTitle(title);
+            return recipes;
+        }
     }
 }

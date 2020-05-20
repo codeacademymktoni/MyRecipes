@@ -46,5 +46,10 @@ namespace MyRecipes.Repository
             //write json to file
             File.WriteAllText("recipes.txt", json);
         }
+
+        public List<Recipe> GetByTitle(string title)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

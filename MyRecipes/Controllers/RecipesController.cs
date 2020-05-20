@@ -13,9 +13,9 @@ namespace MyRecipes.Controllers
             RecipesService = recipesService;
         }
 
-        public IActionResult Overview()
+        public IActionResult Overview(string title)
         {
-            var recipes = RecipesService.GetAll();
+            var recipes = RecipesService.GetByTitle(title);
 
             return View(recipes);
         }

@@ -57,5 +57,10 @@ namespace MyRecipes.Repository
             recipe.Id = maxId + 1;
             Recipes.Add(recipe);
         }
+
+        public List<Recipe> GetByTitle(string title)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

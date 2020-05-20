@@ -1,5 +1,6 @@
 ﻿using MyRecipes.Models;
 using MyRecipes.Repository.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
@@ -84,5 +85,48 @@ namespace MyRecipes.Repository
 
             return result;
         }
+
+        public List<Recipe> GetByTitle(string title)
+        {
+            var result = new List<Recipe>();
+
+            using (var cnn = new SqlConnection("Data Source=.\\SQLEXPRESS; Initial Catalog = MyRecipesSqlDemo; Integrated Security = true"))
+            {
+                cnn.Open();
+
+                var query = "SELECT * FROM Recipes";
+
+                if (!String.IsNullOrEmpty(title))
+                {
+                    query = $"{query} where title like @title";
+                }
+
+                var cmd = new SqlCommand(query, cnn);
+
+                if (!String.IsNullOrEmpty(title))
+                {
+                    cmd.Parameters.AddWithValue("@title", $"%{title}%");
+                }
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var recipe = new Recipe();
+
+                    recipe.Id = reader.GetInt32(0);
+                    recipe.Title = reader.GetString(1);
+                    recipe.Description = reader.GetString(2);
+                    recipe.ImageUrl = reader.GetString(3);
+                    recipe.Ingredients = reader.GetString(4);
+                    recipe.Directions = reader.GetString(5);
+
+                    result.Add(recipe);
+                }
+            }
+
+            return result;
+        }
+
     }
 }
