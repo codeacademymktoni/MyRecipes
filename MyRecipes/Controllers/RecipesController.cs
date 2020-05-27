@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyRecipes.Models;
+using MyRecipes.Data;
 using MyRecipes.Services.Interfaces;
 
 namespace MyRecipes.Controllers
@@ -22,7 +22,7 @@ namespace MyRecipes.Controllers
 
         public IActionResult Details(int id)
         {
-            var recipe = RecipesService.GetById(id);
+            var recipe = RecipesService.GetRecipeDetails(id);
 
             return View(recipe);
         }

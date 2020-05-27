@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyRecipes.Data;
 using MyRecipes.Repository;
 using MyRecipes.Repository.Interfaces;
 using MyRecipes.Services;
@@ -35,10 +37,12 @@ namespace MyRecipes
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<MyRecipesContext>(options  => options.UseSqlServer("Data Source=.\\SQLEXPRESS; Initial Catalog = MyRecipesDemo; Integrated Security = true"));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSingleton<IRecipeRepository, RecipeSqlRepository>();
-            services.AddSingleton<IRecipesService, RecipesService>();
+            services.AddTransient<IRecipeRepository, RecipeRepository>();
+            services.AddTransient<IRecipesService, RecipesService>();
 
         }
 

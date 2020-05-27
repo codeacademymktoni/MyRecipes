@@ -1,4 +1,4 @@
-﻿using MyRecipes.Models;
+﻿using MyRecipes.Data;
 using MyRecipes.Repository.Interfaces;
 using MyRecipes.Services.Interfaces;
 using System.Collections.Generic;
@@ -23,6 +23,17 @@ namespace MyRecipes.Services
         public Recipe GetById(int id)
         {
             var recipe = RecipesRepo.GetById(id);
+
+            return recipe;
+        }
+
+        public Recipe GetRecipeDetails(int id)
+        {
+            var recipe = RecipesRepo.GetById(id);
+
+            recipe.Views += 1;
+            RecipesRepo.Update(recipe);
+
             return recipe;
         }
 

@@ -1,4 +1,4 @@
-﻿using MyRecipes.Models;
+﻿using MyRecipes.Data;
 using System.Collections.Generic;
 
 namespace MyRecipes.Repository.Interfaces
@@ -9,5 +9,6 @@ namespace MyRecipes.Repository.Interfaces
         List<Recipe> GetByTitle(string title);
         Recipe GetById(int id);
         void Add(Recipe recipe);
+        void Update(Recipe recipe);
     }
 }
