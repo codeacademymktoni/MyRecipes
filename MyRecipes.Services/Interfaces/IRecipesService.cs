@@ -10,5 +10,7 @@ namespace MyRecipes.Services.Interfaces
         Recipe GetById(int id);
         void CreateRecipe(Recipe recipe);
         Recipe GetRecipeDetails(int id);
+        void Delete(int id);
+        void UpdateRecipe(Recipe recipe);
     }
 }

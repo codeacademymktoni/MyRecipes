@@ -10,5 +10,6 @@ namespace MyRecipes.Repository.Interfaces
         Recipe GetById(int id);
         void Add(Recipe recipe);
         void Update(Recipe recipe);
+        void Delete(int id);
     }
 }

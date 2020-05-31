@@ -19,9 +19,4 @@
     <ProjectReference Include="..\MyRecipes.Services\MyRecipes.Services.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

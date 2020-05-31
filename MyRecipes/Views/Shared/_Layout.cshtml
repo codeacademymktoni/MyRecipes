@@ -4,7 +4,7 @@
     var homeActive = ViewBag.Title == "Home" ? "active" : "";
     var aboutIsActive = ViewBag.Title == "About Us" ? "active" : "";
     var contactIsActive = ViewBag.Title == "Contact Us" ? "active" : "";
-    var createIsActive = ViewBag.Title == "Create" ? "active" : "";
+    var modifyIsActive = ViewBag.Title == "Modify Overview" ? "active" : "";
 }
 
 
@@ -33,8 +33,8 @@
                 <li class="nav-item @contactIsActive">
                     <a class="nav-link" asp-controller="Info" asp-action="ContactUs">Contact Us</a>
                 </li>
-                <li class="nav-item @createIsActive">
-                    <a class="nav-link" asp-controller="Recipes" asp-action="Create">Create recipe</a>
+                <li class="nav-item @modifyIsActive">
+                    <a class="nav-link" asp-controller="Recipes" asp-action="ModifyOverview">Modify recipes</a>
                 </li>
             </ul>
         </div>

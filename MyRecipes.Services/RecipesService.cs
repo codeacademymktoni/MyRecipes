@@ -17,6 +17,11 @@ namespace MyRecipes.Services
         public List<Recipe> GetAll()
         {
             var recipes = RecipesRepo.GetAll();
+
+            foreach (var recipe in recipes)
+            {
+
+            }
             return recipes;
         }
 
@@ -46,6 +51,16 @@ namespace MyRecipes.Services
         {
             var recipes = RecipesRepo.GetByTitle(title);
             return recipes;
+        }
+
+        public void Delete(int id)
+        {
+            RecipesRepo.Delete(id);
+        }
+
+        public void UpdateRecipe(Recipe recipe)
+        {
+            RecipesRepo.Update(recipe);
         }
     }
 }

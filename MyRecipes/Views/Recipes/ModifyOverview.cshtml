@@ -1,0 +1,30 @@
+﻿@model  List<MyRecipes.Data.Recipe>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Modify Overview";
+}
+
+<a asp-controller="Recipes" asp-action="Create" class="btn btn-primary">Add new recipe</a>
+
+<table class="table" style="margin-top:20px">
+    <thead>
+        <tr>
+            <th>Recipe</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var recipe in @Model)
+        {
+            <tr>
+                <td>@recipe.Title</td>
+                <td>
+                    <a asp-controller="Recipes" asp-action="Modify" asp-route-id="@recipe.Id">Modify</a>  | 
+                    <a asp-controller="Recipes" asp-action="Delete" asp-route-id="@recipe.Id" onclick="return confirm('Are you sure you want to delete this recipe')">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

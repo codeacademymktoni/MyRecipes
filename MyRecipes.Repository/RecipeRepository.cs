@@ -47,7 +47,18 @@ namespace MyRecipes.Repository
 
         public void Update(Recipe recipe)
         {
-            Context.Entry<Recipe>(recipe).State = EntityState.Modified;
+            Context.Recipes.Update(recipe);
+            Context.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var recipe = new Recipe()
+            {
+                Id = id
+            };
+
+            Context.Recipes.Remove(recipe);
             Context.SaveChanges();
         }
     }

@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Data;
+using MyRecipes.Helpers;
 using MyRecipes.Services.Interfaces;
+using MyRecipes.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyRecipes.Controllers
 {
@@ -17,7 +22,11 @@ namespace MyRecipes.Controllers
         {
             var recipes = RecipesService.GetByTitle(title);
 
-            return View(recipes);
+            var overviewViewModels = recipes
+                    .Select(x => ModelConverter.ConvertToOverviewModel(x))
+                    .ToList();
+
+            return View(overviewViewModels);
         }
 
         public IActionResult Details(int id)
@@ -40,12 +49,42 @@ namespace MyRecipes.Controllers
             if (ModelState.IsValid)
             {
                 RecipesService.CreateRecipe(recipe);
-                return RedirectToAction("Overview");
+                return RedirectToAction("ModifyOverview");
             }
             else
             {
                 return View(recipe);
             }
+        }
+
+        public IActionResult ModifyOverview()
+        {
+            var recipes = RecipesService.GetAll();
+            return View(recipes);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            RecipesService.Delete(id);
+            return RedirectToAction("ModifyOverview");
+        }
+
+        public IActionResult Modify(int id)
+        {
+            var recipe = RecipesService.GetById(id);
+            return View(recipe);
+        }
+
+        [HttpPost]
+        public IActionResult Modify(Recipe recipe)
+        {
+            if (ModelState.IsValid)
+            {
+                RecipesService.UpdateRecipe(recipe);
+                return RedirectToAction("ModifyOverview");
+            }
+
+            return View(recipe);
         }
     }
 }
