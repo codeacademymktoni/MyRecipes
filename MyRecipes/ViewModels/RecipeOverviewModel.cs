@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MyRecipes.ViewModels
 {
-    public class OverviewViewModel
+    public class RecipeOverviewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

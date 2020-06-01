@@ -33,34 +33,41 @@ namespace MyRecipes.Controllers
         {
             var recipe = RecipesService.GetRecipeDetails(id);
 
-            return View(recipe);
+            var recipeDetails = ModelConverter.ConvertToRecipeDetailsModel(recipe);
+
+            return View(recipeDetails);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            var recipe = new Recipe();
+            var recipe = new RecipeCreateModel();
             return View(recipe);
         }
 
         [HttpPost]
-        public IActionResult Create(Recipe recipe)
+        public IActionResult Create(RecipeCreateModel createRecipe)
         {
             if (ModelState.IsValid)
             {
+                var recipe = ModelConverter.ConvertFromCreateModel(createRecipe);
                 RecipesService.CreateRecipe(recipe);
                 return RedirectToAction("ModifyOverview");
             }
             else
             {
-                return View(recipe);
+                return View(createRecipe);
             }
         }
 
         public IActionResult ModifyOverview()
         {
             var recipes = RecipesService.GetAll();
-            return View(recipes);
+            var modifyOverviewModels = recipes
+                .Select(x => ModelConverter.ConverToModifyOverviewModel(x))
+                .ToList();
+
+            return View(modifyOverviewModels);
         }
 
         public IActionResult Delete(int id)
@@ -72,19 +79,21 @@ namespace MyRecipes.Controllers
         public IActionResult Modify(int id)
         {
             var recipe = RecipesService.GetById(id);
-            return View(recipe);
+            var recipeModify = ModelConverter.ConvertToRecipeModify(recipe);
+            return View(recipeModify);
         }
 
         [HttpPost]
-        public IActionResult Modify(Recipe recipe)
+        public IActionResult Modify(RecipeModifyModel modifyRecipe)
         {
             if (ModelState.IsValid)
             {
+                var recipe = ModelConverter.ConvertFromRecipeModify(modifyRecipe);
                 RecipesService.UpdateRecipe(recipe);
                 return RedirectToAction("ModifyOverview");
             }
 
-            return View(recipe);
+            return View(modifyRecipe);
         }
     }
 }

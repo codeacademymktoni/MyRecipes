@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MyRecipes.Data
+namespace MyRecipes.ViewModels
 {
-    public class Recipe
+    public class RecipeModifyModel
     {
         public int Id { get; set; }
         [Required]
@@ -18,7 +16,6 @@ namespace MyRecipes.Data
         public string Ingredients { get; set; }
         [Required]
         public string Directions { get; set; }
-        [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
         public int Views { get; set; }
     }

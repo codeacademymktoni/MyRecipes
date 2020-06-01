@@ -18,10 +18,6 @@ namespace MyRecipes.Services
         {
             var recipes = RecipesRepo.GetAll();
 
-            foreach (var recipe in recipes)
-            {
-
-            }
             return recipes;
         }
 

@@ -1,4 +1,4 @@
-﻿@model List<MyRecipes.ViewModels.OverviewViewModel>;
+﻿@model List<MyRecipes.ViewModels.RecipeOverviewModel>;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -6,8 +6,8 @@
     ViewBag.Title = "Home";
 }
 
-<div class="row">
-    <form asp-controller="Recipes" asp-action="Overview">
+<div class="row" style="margin-bottom:20px">
+    <form asp-controller="Recipes" asp-action="Overview" class="form-inline">
         <div class="form-group">
             <input name="Title" value="" id="title" class="form-control" placeholder="Search" />
             <div class="form-group">
