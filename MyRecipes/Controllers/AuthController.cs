@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
+using System;
 using System.Threading.Tasks;
 
 namespace MyRecipes.Controllers
@@ -22,7 +23,7 @@ namespace MyRecipes.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(SignInModel model)
+        public async Task<IActionResult> SignIn(SignInModel model, string returnUrl  = null)
         {
             if (ModelState.IsValid)
             {
@@ -30,7 +31,14 @@ namespace MyRecipes.Controllers
 
                 if (isSignedIn)
                 {
-                    return RedirectToAction("Overview", "Recipes");
+                    if (!String.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Overview", "Recipes");
+                    }
                 }
                 else
                 {
@@ -40,6 +48,39 @@ namespace MyRecipes.Controllers
             }
 
             return View(model);
+        }
+
+        public async Task<IActionResult> SignOut()
+        {
+            await AuthService.SignOutAsync(HttpContext);
+            return RedirectToAction("Overview", "Recipes");
+        }
+
+        public IActionResult SignUp()
+        {
+            var signUpModel = new SignUpModel();
+            return View(signUpModel);
+        }
+
+        [HttpPost]
+        public IActionResult SignUp(SignUpModel signUpModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = AuthService.SignUp(signUpModel.Username, signUpModel.Password);
+                if (response.IsSuccessful)
+                {
+                    return RedirectToAction("SignIn");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, response.Message);
+                    return View(signUpModel);
+                }
+            
+            }
+
+            return View(signUpModel);
         }
     }
 }

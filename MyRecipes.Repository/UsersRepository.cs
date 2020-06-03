@@ -20,5 +20,11 @@ namespace MyRecipes.Repository
         {
             return Context.Users.FirstOrDefault(x => x.Username == username);
         }
+
+        public void Add(User user)
+        {
+            Context.Users.Add(user);
+            Context.SaveChanges();
+        }
     }
 }

@@ -33,22 +33,26 @@
                 <li class="nav-item @contactIsActive">
                     <a class="nav-link" asp-controller="Info" asp-action="ContactUs">Contact Us</a>
                 </li>
-                <li class="nav-item @modifyIsActive">
-                    <a class="nav-link" asp-controller="Recipes" asp-action="ModifyOverview">Modify recipes</a>
-                </li>
                 @if (User.Identity.IsAuthenticated)
                 {
+                    <li class="nav-item @modifyIsActive">
+                        <a class="nav-link" asp-controller="Recipes" asp-action="ModifyOverview">Modify recipes</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="/">@User.Identity.Name</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Sign Out</a>
+                        <a class="nav-link" asp-controller="Auth" asp-action="SignOut">Sign Out</a>
                     </li>
                 }
                 else
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Auth" asp-action="SignIn">Sign In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Auth" asp-action="SignUp">Sign Up</a>
                     </li>
                 }
             </ul>

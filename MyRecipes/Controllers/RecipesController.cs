@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Data;
 using MyRecipes.Helpers;
 using MyRecipes.Services.Interfaces;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace MyRecipes.Controllers
 {
+    [Authorize]
     public class RecipesController : Controller
     {
         public IRecipesService RecipesService { get; set; }
@@ -18,6 +20,7 @@ namespace MyRecipes.Controllers
             RecipesService = recipesService;
         }
 
+        [AllowAnonymous]
         public IActionResult Overview(string title)
         {
             var recipes = RecipesService.GetByTitle(title);
@@ -29,6 +32,7 @@ namespace MyRecipes.Controllers
             return View(overviewViewModels);
         }
 
+        [AllowAnonymous]
         public IActionResult Details(int id)
         {
             var recipe = RecipesService.GetRecipeDetails(id);
