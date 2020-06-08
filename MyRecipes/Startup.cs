@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyRecipes.Data;
@@ -38,7 +39,10 @@ namespace MyRecipes
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<MyRecipesContext>(options  => options.UseSqlServer("Data Source=.\\SQLEXPRESS; Initial Catalog = MyRecipesDemo; Integrated Security = true"));
+            services.AddDbContext<MyRecipesContext>(options  => 
+                options
+                .UseLazyLoadingProxies()
+                .UseSqlServer("Data Source=.\\SQLEXPRESS; Initial Catalog = MyRecipesDemo; Integrated Security = true"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -49,7 +53,14 @@ namespace MyRecipes
             })
             .AddCookie(options => {
                 options.LoginPath = "/auth/signin";
+                options.AccessDeniedPath = "/auth/accessDenied";
             });
+
+            services.AddAuthorization(options =>
+                options.AddPolicy(
+                    "IsAdmin", 
+                    policy => policy.RequireClaim("IsAdmin", "True"))
+            );
 
             services.AddTransient<IRecipeRepository, RecipeRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();

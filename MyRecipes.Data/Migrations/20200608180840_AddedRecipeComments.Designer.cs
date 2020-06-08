@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyRecipes.Data;
 
 namespace MyRecipes.Data.Migrations
 {
     [DbContext(typeof(MyRecipesContext))]
-    partial class MyRecipesContextModelSnapshot : ModelSnapshot
+    [Migration("20200608180840_AddedRecipeComments")]
+    partial class AddedRecipeComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,10 +58,7 @@ namespace MyRecipes.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Comment")
-                        .IsRequired();
-
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<string>("Comment");
 
                     b.Property<int>("RecipeId");
 

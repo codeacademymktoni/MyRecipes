@@ -23,7 +23,7 @@ namespace MyRecipes.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(SignInModel model, string returnUrl  = null)
+        public async Task<IActionResult> SignIn(SignInModel model, string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
@@ -77,10 +77,15 @@ namespace MyRecipes.Controllers
                     ModelState.AddModelError(string.Empty, response.Message);
                     return View(signUpModel);
                 }
-            
+
             }
 
             return View(signUpModel);
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MyRecipes.Data;
 using MyRecipes.ViewModels;
 using System;
+using System.Linq;
 
 namespace MyRecipes.Helpers
 {
@@ -31,7 +32,19 @@ namespace MyRecipes.Helpers
                 Ingredients = recipe.Ingredients,
                 Directions = recipe.Directions,
                 DateCreated = recipe.DateCreated,
-                Views = recipe.Views
+                Views = recipe.Views,
+                RecipeComments = recipe.RecipeComments.Select(x => ConvertToRecipeCommentModel(x)).ToList()
+            };
+        }
+
+
+        public static RecipeCommentModel ConvertToRecipeCommentModel(RecipeComment recipeComment)
+        {
+            return new RecipeCommentModel
+            {
+                Comment = recipeComment.Comment,
+                DateCreated = recipeComment.DateCreated,
+                Username = recipeComment.User.Username
             };
         }
 

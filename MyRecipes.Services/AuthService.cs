@@ -21,19 +21,25 @@ namespace MyRecipes.Services
 
         private IUsersRepository UsersRepo { get; set; }
 
+        public async Task SignOutAsync(HttpContext httpContext)
+        {
+            await httpContext.SignOutAsync();
+        }
+
         public async Task<bool> SignInAsync(string username, string password, HttpContext httpContext)
         {
             //get user from DB
             var user = UsersRepo.GetByUsername(username);
 
             //check if user exists and compare password
-            if (user != null && user.Password == password)
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
                 //create principal
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Username),
                     new Claim(ClaimTypes.Name, user.Username),
+                    new Claim("IsAdmin", user.IsAdmin.ToString())
                 };
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
@@ -47,11 +53,6 @@ namespace MyRecipes.Services
             return false;
         }
 
-        public async Task SignOutAsync(HttpContext httpContext)
-        {
-            await httpContext.SignOutAsync();
-        }
-
         public SignUpResponse SignUp(string username, string password)
         {
             var user = UsersRepo.GetByUsername(username);
@@ -61,7 +62,7 @@ namespace MyRecipes.Services
             {
                 var newUser = new User();
                 newUser.Username = username;
-                newUser.Password = password;
+                newUser.Password = BCrypt.Net.BCrypt.HashPassword(password);
 
                 UsersRepo.Add(newUser);
                 response.IsSuccessful = true;

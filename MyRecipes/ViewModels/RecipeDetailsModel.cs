@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MyRecipes.ViewModels
 {
@@ -12,5 +13,6 @@ namespace MyRecipes.ViewModels
         public string Directions { get; set; }
         public DateTime? DateCreated { get; set; }
         public int Views { get; set; }
+        public List<RecipeCommentModel> RecipeComments { get; set; }
     }
 }

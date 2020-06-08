@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyRecipes.Data;
 
 namespace MyRecipes.Data.Migrations
 {
     [DbContext(typeof(MyRecipesContext))]
-    partial class MyRecipesContextModelSnapshot : ModelSnapshot
+    [Migration("20200608162709_addedIsAdmin")]
+    partial class addedIsAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,30 +52,6 @@ namespace MyRecipes.Data.Migrations
                     b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("MyRecipes.Data.RecipeComment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Comment")
-                        .IsRequired();
-
-                    b.Property<DateTime>("DateCreated");
-
-                    b.Property<int>("RecipeId");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RecipeComments");
-                });
-
             modelBuilder.Entity("MyRecipes.Data.User", b =>
                 {
                     b.Property<int>("Id")
@@ -91,19 +69,6 @@ namespace MyRecipes.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("MyRecipes.Data.RecipeComment", b =>
-                {
-                    b.HasOne("MyRecipes.Data.Recipe", "Recipe")
-                        .WithMany("RecipeComments")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MyRecipes.Data.User", "User")
-                        .WithMany("RecipeComments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

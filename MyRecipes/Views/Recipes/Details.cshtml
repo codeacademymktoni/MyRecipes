@@ -16,3 +16,10 @@
 
 <h2>Date created:</h2>
 <p>@Model.DateCreated</p>
+
+
+<h1>Comments:</h1>
+@foreach (var comment in Model.RecipeComments)
+{
+    <p>@comment.Comment - @comment.DateCreated - @comment.Username</p>
+}

@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyRecipes.Data;
 using MyRecipes.Helpers;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace MyRecipes.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "IsAdmin")]
     public class RecipesController : Controller
     {
         public IRecipesService RecipesService { get; set; }
