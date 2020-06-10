@@ -1,4 +1,5 @@
 ﻿using MyRecipes.Data;
+using MyRecipes.Services.DtoModels;
 using System.Collections.Generic;
 
 namespace MyRecipes.Services.Interfaces
@@ -12,5 +13,6 @@ namespace MyRecipes.Services.Interfaces
         Recipe GetRecipeDetails(int id);
         void Delete(int id);
         void UpdateRecipe(Recipe recipe);
+        SidebarData GetSidebarData();
     }
 }

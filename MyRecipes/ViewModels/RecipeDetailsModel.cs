@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyRecipes.Services.DtoModels;
+using System;
 using System.Collections.Generic;
 
 namespace MyRecipes.ViewModels
@@ -14,5 +15,6 @@ namespace MyRecipes.ViewModels
         public DateTime? DateCreated { get; set; }
         public int Views { get; set; }
         public List<RecipeCommentModel> RecipeComments { get; set; }
+        public SidebarData SidebarData { get; set; }
     }
 }

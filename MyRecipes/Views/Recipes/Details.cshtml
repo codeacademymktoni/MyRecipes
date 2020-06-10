@@ -1,25 +1,44 @@
 ﻿@model MyRecipes.ViewModels.RecipeDetailsModel;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-@{ 
+@{
     Layout = "_Layout";
 }
 
-<img style="width:100%" src="@Model.ImageUrl"/>
-<h1 style="text-align:center">@Model.Title</h1>
-<p style="text-align:center">@Model.Description</p>
+    <div class="row">
+        <div class="col-md-9">
+            <img style="width:100%" src="@Model.ImageUrl" />
+            <h1 style="text-align:center">@Model.Title</h1>
+            <p style="text-align:center">@Model.Description</p>
 
-<h2>Ingredients</h2>
-<p>@Model.Ingredients</p>
+            <h2>Ingredients</h2>
+            <p>@Model.Ingredients</p>
 
-<h2>Directions:</h2>
-<p>@Model.Directions</p>
+            <h2>Directions:</h2>
+            <p>@Model.Directions</p>
 
-<h2>Date created:</h2>
-<p>@Model.DateCreated</p>
+            <h2>Date created:</h2>
+            <p>@Model.DateCreated</p>
 
 
-<h1>Comments:</h1>
-@foreach (var comment in Model.RecipeComments)
-{
-    <p>@comment.Comment - @comment.DateCreated - @comment.Username</p>
-}
+            <h1>Comments:</h1>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="RecipeComments" asp-action="Add" method="post">
+                    <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                    <div class="form-group">
+                        <textarea id="comment" name="comment" class="form-control"> </textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Comment</button>
+                </form>
+            }
+
+            @foreach (var comment in Model.RecipeComments)
+            {
+                <p>@comment.Comment - @comment.DateCreated - @comment.Username</p>
+            }
+        </div>
+        <div class="col-md-3">
+           <partial name="SidebarPartial" for="SidebarData"/>
+        </div>
+    </div>

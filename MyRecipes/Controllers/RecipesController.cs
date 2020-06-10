@@ -20,21 +20,29 @@ namespace MyRecipes.Controllers
         [AllowAnonymous]
         public IActionResult Overview(string title)
         {
+            var recipeOverviewData = new RecipeOverviewDataModel();
             var recipes = RecipesService.GetByTitle(title);
 
             var overviewViewModels = recipes
                     .Select(x => ModelConverter.ConvertToOverviewModel(x))
                     .ToList();
 
-            return View(overviewViewModels);
+            var sidebarData = RecipesService.GetSidebarData();
+
+            recipeOverviewData.Recipes = overviewViewModels;
+            recipeOverviewData.SidebarData = sidebarData;
+
+            return View(recipeOverviewData);
         }
 
         [AllowAnonymous]
         public IActionResult Details(int id)
         {
             var recipe = RecipesService.GetRecipeDetails(id);
+            var sidebarData = RecipesService.GetSidebarData();
 
             var recipeDetails = ModelConverter.ConvertToRecipeDetailsModel(recipe);
+            recipeDetails.SidebarData = sidebarData;
 
             return View(recipeDetails);
         }

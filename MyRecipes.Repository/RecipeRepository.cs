@@ -30,7 +30,10 @@ namespace MyRecipes.Repository
 
         public Recipe GetById(int id)
         {
-            return Context.Recipes.FirstOrDefault(x => x.Id == id);
+            return Context.Recipes
+                .Include(x => x.RecipeComments)
+                    .ThenInclude(x => x.User)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public List<Recipe> GetByTitle(string title)
