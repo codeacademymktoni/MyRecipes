@@ -66,8 +66,10 @@ namespace MyRecipes
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<IRecipesService, RecipesService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IRecipeCommentsService, RecipeCommentsService>();
             services.AddTransient<IRecipeCommentsRepository, RecipeCommentsRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

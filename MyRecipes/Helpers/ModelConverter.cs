@@ -37,6 +37,25 @@ namespace MyRecipes.Helpers
             };
         }
 
+        public static UserModifyModel ConvertToUserModifyModel(User user)
+        {
+            return new UserModifyModel
+            {
+                Id = user.Id,
+                Username = user.Username,
+                IsAdmin = user.IsAdmin,
+            };
+        }
+
+        public static User ConvertFromUserModifyModel(UserModifyModel userModifyModel)
+        {
+            return new User
+            {
+                Id = userModifyModel.Id,
+                IsAdmin = userModifyModel.IsAdmin,
+                Username = userModifyModel.Username
+            };
+        }
 
         public static RecipeCommentModel ConvertToRecipeCommentModel(RecipeComment recipeComment)
         {
@@ -84,6 +103,16 @@ namespace MyRecipes.Helpers
             };
         }
 
+        internal static UserDetailsModel ConvertToUserDetailsModel(User user)
+        {
+            return new UserDetailsModel
+            {
+                Id = user.Id,
+                Username = user.Username,
+                IsAdmin = user.IsAdmin
+            };
+        }
+
         public static Recipe ConvertFromRecipeModify(RecipeModifyModel recipe)
         {
             return new Recipe
@@ -96,6 +125,16 @@ namespace MyRecipes.Helpers
                 Directions = recipe.Directions,
                 DateCreated = recipe.DateCreated,
                 Views = recipe.Views
+            };
+        }
+
+        public static ModifyUserOverviewModel ConvertToModifyUserOverview(User user)
+        {
+            return new ModifyUserOverviewModel
+            {
+                Id = user.Id,
+                Username = user.Username,
+                IsAdmin = user.IsAdmin
             };
         }
     }

@@ -14,12 +14,12 @@ namespace MyRecipes.Services
 {
     public class AuthService : IAuthService
     {
-        public AuthService(IUsersRepository usersRepo)
+        public AuthService(IUsersService usersService)
         {
-            UsersRepo = usersRepo;
+            UsersService = usersService;
         }
 
-        private IUsersRepository UsersRepo { get; set; }
+        private IUsersService UsersService { get; set; }
 
         public async Task SignOutAsync(HttpContext httpContext)
         {
@@ -29,7 +29,7 @@ namespace MyRecipes.Services
         public async Task<bool> SignInAsync(string username, string password, HttpContext httpContext)
         {
             //get user from DB
-            var user = UsersRepo.GetByUsername(username);
+            var user = UsersService.GetByUsername(username);
 
             //check if user exists and compare password
             if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
@@ -56,25 +56,20 @@ namespace MyRecipes.Services
 
         public SignUpResponse SignUp(string username, string password)
         {
-            var user = UsersRepo.GetByUsername(username);
             var response = new SignUpResponse();
+            var createUserResult = UsersService.CreateUser(username, password, false);
 
-            if(user == null)
+            if(createUserResult  == null)
             {
-                var newUser = new User();
-                newUser.Username = username;
-                newUser.Password = BCrypt.Net.BCrypt.HashPassword(password);
-
-                UsersRepo.Add(newUser);
                 response.IsSuccessful = true;
-                return response;
             }
             else
             {
-                response.IsSuccessful = false;
-                response.Message = "User with username alreay exists";
-                return response;
+                response.IsSuccessful = true;
+                response.Message = createUserResult;
             }
+
+            return response;
         }
     }
 }
