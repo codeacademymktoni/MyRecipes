@@ -1,8 +1,9 @@
-﻿@{ 
+﻿@model MyRecipes.ViewModels.ContactUsModel
+@{ 
     Layout = "_Layout";
     ViewBag.Title = "Contact Us";
 }
 
 <h1>Hey, here are some information how you can reach us</h1>
-<p>Email: academy@codeacademy.com</p>
-<p>Phone: +38931123123</p>
+<p>Email: @Model.Email</p>
+<p>Phone: @Model.Phone</p>

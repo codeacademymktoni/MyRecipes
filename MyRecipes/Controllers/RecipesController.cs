@@ -11,15 +11,19 @@ namespace MyRecipes.Controllers
     public class RecipesController : Controller
     {
         public IRecipesService RecipesService { get; set; }
+        public ILogsService LogsService { get; }
 
-        public RecipesController(IRecipesService recipesService)
+        public RecipesController(IRecipesService recipesService, ILogsService logsService)
         {
             RecipesService = recipesService;
+            LogsService = logsService;
         }
 
         [AllowAnonymous]
         public IActionResult Overview(string title)
         {
+            LogsService.Log("Overview", "Overview requested");
+
             var recipeOverviewData = new RecipeOverviewDataModel();
             var recipes = RecipesService.GetByTitle(title);
 

@@ -1,4 +1,5 @@
-﻿using MyRecipes.Data;
+﻿using Microsoft.Extensions.Configuration;
+using MyRecipes.Data;
 using MyRecipes.Repository.Interfaces;
 using MyRecipes.Services.DtoModels;
 using MyRecipes.Services.Interfaces;
@@ -58,6 +59,7 @@ namespace MyRecipes.Services
         public void ChangePassword(int id, string password)
         {
             var user = usersRepository.GetById(id);
+
             user.Password = BCrypt.Net.BCrypt.HashPassword(password);
             usersRepository.Update(user);
         }

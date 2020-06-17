@@ -6,7 +6,6 @@ using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MyRecipes.Controllers
 {
@@ -14,10 +13,12 @@ namespace MyRecipes.Controllers
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;
+        private readonly ILogsService logsService;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, ILogsService logsService)
         {
             this.usersService = usersService;
+            this.logsService = logsService;
         }
 
         [Authorize(Policy = "IsAdmin")]
@@ -38,13 +39,14 @@ namespace MyRecipes.Controllers
         {
             if(!AuthorizeService.AuthorizeUser(User, id))
             {
-                return RedirectToAction("Auth", "AccessDenied");
+                return RedirectToAction("AccessDenied", "Auth");
             }
 
             usersService.Delete(id);
 
+            logsService.Log("Delete", $"Requested for user id: {id}", Convert.ToInt32(User.FindFirst("Id").Value));
 
-            if(Convert.ToInt32(User.FindFirst("Id").Value) == id)
+            if (Convert.ToInt32(User.FindFirst("Id").Value) == id)
             {
                 return RedirectToAction("SignOut", "Auth");
             }
@@ -56,7 +58,7 @@ namespace MyRecipes.Controllers
         {
             if (!AuthorizeService.AuthorizeUser(User, id))
             {
-                return RedirectToAction("Auth", "AccessDenied");
+                return RedirectToAction("AccessDenied", "Auth");
             }
 
             var user = usersService.GetById(id);
@@ -70,7 +72,7 @@ namespace MyRecipes.Controllers
         {
             if (!AuthorizeService.AuthorizeUser(User, userModifyModel.Id))
             {
-                return RedirectToAction("Auth", "AccessDenied");
+                return RedirectToAction("AccessDenied", "Auth");
             }
 
             if (ModelState.IsValid)
@@ -95,7 +97,7 @@ namespace MyRecipes.Controllers
         {
             if (!AuthorizeService.AuthorizeUser(User, id))
             {
-                return RedirectToAction("Auth", "AccessDenied");
+                return RedirectToAction("AccessDenied", "Auth");
             }
 
             var model = new UserChangePassModel();
@@ -108,7 +110,7 @@ namespace MyRecipes.Controllers
         {
             if (!AuthorizeService.AuthorizeUser(User, userChangePassModel.Id))
             {
-                return RedirectToAction("Auth", "AccessDenied");
+                return RedirectToAction("AccessDenied", "Auth");
             }
 
             if (ModelState.IsValid)
@@ -152,7 +154,7 @@ namespace MyRecipes.Controllers
         {
             if (!AuthorizeService.AuthorizeUser(User, id))
             {
-                return RedirectToAction("Auth", "AccessDenied");
+                return RedirectToAction("AccessDenied", "Auth");
             }
 
             var user = usersService.GetById(id);

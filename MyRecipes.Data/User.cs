@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyRecipes.Data
@@ -18,5 +17,6 @@ namespace MyRecipes.Data
         public bool IsAdmin { get; set; }
 
         public virtual List<RecipeComment> RecipeComments { get; set; }
+        public virtual List<Log> Logs { get; set; }
     }
 }

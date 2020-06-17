@@ -12,7 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Proxies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyRecipes.Custom.Extensions;
 using MyRecipes.Data;
+using MyRecipes.Options;
 using MyRecipes.Repository;
 using MyRecipes.Repository.Interfaces;
 using MyRecipes.Services;
@@ -42,9 +44,11 @@ namespace MyRecipes
             services.AddDbContext<MyRecipesContext>(options  => 
                 options
                 .UseLazyLoadingProxies()
-                .UseSqlServer("Data Source=.\\SQLEXPRESS; Initial Catalog = MyRecipesDemo; Integrated Security = true"));
+                .UseSqlServer(Configuration.GetConnectionString("MyRecipesDemo")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.Configure<ContactUsInfo>(Configuration.GetSection("ContactUsInfo"));
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -69,7 +73,8 @@ namespace MyRecipes
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IRecipeCommentsService, RecipeCommentsService>();
             services.AddTransient<IRecipeCommentsRepository, RecipeCommentsRepository>();
-
+            services.AddTransient<ILogsService, LogsService>();
+            services.AddTransient<ILogsRepository, LogsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,7 +94,7 @@ namespace MyRecipes
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseCustomExceptionHandler();
             app.UseAuthentication();
 
             app.UseMvc(routes =>

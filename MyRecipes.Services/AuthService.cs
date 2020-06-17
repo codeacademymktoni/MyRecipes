@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
-using MyRecipes.Data;
-using MyRecipes.Repository.Interfaces;
+using Microsoft.Extensions.Configuration;
 using MyRecipes.Services.DtoModels;
 using MyRecipes.Services.Interfaces;
 using System;
@@ -14,12 +13,14 @@ namespace MyRecipes.Services
 {
     public class AuthService : IAuthService
     {
-        public AuthService(IUsersService usersService)
+        public AuthService(IUsersService usersService, IConfiguration configuration)
         {
             UsersService = usersService;
+            Configuration = configuration;
         }
 
         private IUsersService UsersService { get; set; }
+        private IConfiguration Configuration { get; }
 
         public async Task SignOutAsync(HttpContext httpContext)
         {
@@ -46,7 +47,10 @@ namespace MyRecipes.Services
                 var principal = new ClaimsPrincipal(identity);
 
                 //sign in user to context
-                await httpContext.SignInAsync(principal);
+                await httpContext.SignInAsync(principal, new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTime.Now.AddMinutes(Convert.ToDouble(Configuration["CookieExpiresMinutes"]))
+                });
 
                 return true;
             }
