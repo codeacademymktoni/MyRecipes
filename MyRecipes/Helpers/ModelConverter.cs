@@ -33,7 +33,20 @@ namespace MyRecipes.Helpers
                 Directions = recipe.Directions,
                 DateCreated = recipe.DateCreated,
                 Views = recipe.Views,
-                RecipeComments = recipe.RecipeComments.Select(x => ConvertToRecipeCommentModel(x)).ToList()
+                RecipeComments = recipe.RecipeComments.Select(x => ConvertToRecipeCommentModel(x)).ToList(),
+                RecipeLikes = recipe.RecipeLikes.Select(x => ConvertToRecipeLikesViewModel(x)).ToList()
+            };
+        }
+
+        private static RecipeLikeModel ConvertToRecipeLikesViewModel(RecipeLike x)
+        {
+            return new RecipeLikeModel
+            {
+                Id = x.Id,
+                DateCreated = x.DateCreated,
+                Status = x.Status,
+                UserId = x.UserId,
+                RecipeId = x.RecipeId
             };
         }
 

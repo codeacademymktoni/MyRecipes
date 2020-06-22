@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Helpers;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
+using System;
 using System.Linq;
 
 namespace MyRecipes.Controllers
@@ -47,6 +48,24 @@ namespace MyRecipes.Controllers
 
             var recipeDetails = ModelConverter.ConvertToRecipeDetailsModel(recipe);
             recipeDetails.SidebarData = sidebarData;
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = Convert.ToInt32(User.FindFirst("Id").Value);
+                var currentLike = recipeDetails.RecipeLikes.FirstOrDefault(x => x.UserId == userId);
+
+                if (currentLike != null)
+                {
+                    if (currentLike.Status)
+                    {
+                        recipeDetails.LikeStatus = RecipeLikeStatus.Liked;
+                    }
+                    else
+                    {
+                        recipeDetails.LikeStatus = RecipeLikeStatus.Disliked;
+                    }
+                }
+            }
 
             return View(recipeDetails);
         }

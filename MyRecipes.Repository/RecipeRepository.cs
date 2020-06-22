@@ -34,6 +34,7 @@ namespace MyRecipes.Repository
             return Context.Recipes
                 .Include(x => x.RecipeComments)
                     .ThenInclude(x => x.User)
+                .Include(x => x.RecipeLikes)
                 .FirstOrDefault(x => x.Id == id);
         }
 

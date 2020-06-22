@@ -15,5 +15,6 @@ namespace MyRecipes.Data
         public virtual DbSet<User> Users{ get; set; }
         public virtual DbSet<RecipeComment> RecipeComments { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
+        public virtual DbSet<RecipeLike> RecipeLikes { get; set; }
     }
 }

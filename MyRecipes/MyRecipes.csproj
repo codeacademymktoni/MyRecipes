@@ -20,4 +20,9 @@
     <ProjectReference Include="..\MyRecipes.Services\MyRecipes.Services.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\axios\" />
+  </ItemGroup>
+
 </Project>

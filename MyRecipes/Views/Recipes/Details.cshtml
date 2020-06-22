@@ -24,6 +24,35 @@
         <h2>Date created:</h2>
         <p>@Model.DateCreated</p>
 
+        <p>Likes: <span id="likeCountContainer">@Model.RecipeLikes.Where(x => x.Status == true).Count()</span></p>
+        <p>Dislikes: <span id="dislikeCountContainer">@Model.RecipeLikes.Where(x => x.Status == false).Count()</span> </p>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (Model.LikeStatus == MyRecipes.ViewModels.RecipeLikeStatus.None)
+            {
+                <button id="btnAddLike" class="btn btn-outline-success" onclick="RecipeLike(@Model.Id)">Like</button>
+                <button id="btnRemoveLike" class="btn btn-success displayNone" onclick="RemoveRecipeLike(@Model.Id)">Unlike</button>
+                <button id="btnAddDislike" class="btn btn-outline-danger" onclick="RecipeDislike(@Model.Id)">Dislike</button>
+                <button id="btnRemoveDislike" class="btn btn-danger displayNone" onclick="RemoveRecipeDislike(@Model.Id)">Undislike</button>
+            }
+
+            if (Model.LikeStatus == MyRecipes.ViewModels.RecipeLikeStatus.Liked)
+            {
+                <button id="btnAddLike" class="btn btn-outline-success displayNone" onclick="RecipeLike(@Model.Id)">Like</button>
+                <button id="btnRemoveLike" class="btn btn-success" onclick="RemoveRecipeLike(@Model.Id)">Unlike</button>
+                <button id="btnAddDislike" class="btn btn-outline-danger" onclick="RecipeDislike(@Model.Id)">Dislike</button>
+                <button id="btnRemoveDislike" class="btn btn-danger displayNone" onclick="RemoveRecipeDislike(@Model.Id)">Undislike</button>
+            }
+
+            if (Model.LikeStatus == MyRecipes.ViewModels.RecipeLikeStatus.Disliked)
+            {
+                <button id="btnAddLike" class="btn btn-outline-success" onclick="RecipeLike(@Model.Id)">Like</button>
+                <button id="btnRemoveLike" class="btn btn-success displayNone" onclick="RemoveRecipeLike(@Model.Id)">Unlike</button>
+                <button id="btnAddDislike" class="btn btn-outline-danger displayNone" onclick="RecipeDislike(@Model.Id)">Dislike</button>
+                <button id="btnRemoveDislike" class="btn btn-danger" onclick="RemoveRecipeDislike(@Model.Id)">Undislike</button>
+            }
+        }
 
         <h1>Comments:</h1>
         @if (User.Identity.IsAuthenticated)
@@ -48,18 +77,7 @@
 </div>
 
 @section Scripts{
-    <script>
-        function ValidateComment() {
-            var comment = document.getElementById("comment").value;
-
-            if (comment == null || comment == " ") {
-                alert("Please enter comment");
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-    </script>
+    <script src="~/lib/axios/axios.min.js"></script>
+    <script src="~/js/custom/recipedetails.js"> </script>
 }
 

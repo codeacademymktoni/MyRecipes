@@ -22,5 +22,6 @@ namespace MyRecipes.Data
         public DateTime? DateCreated { get; set; }
         public int Views { get; set; }
         public virtual List<RecipeComment> RecipeComments{ get; set; }
+        public virtual List<RecipeLike> RecipeLikes { get; set; }
     }
 }

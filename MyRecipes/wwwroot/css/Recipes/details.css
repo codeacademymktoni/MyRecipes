@@ -1,3 +1,8 @@
 ﻿.label {
     color: red;
 }
+
+
+.displayNone{
+    display:none;
+}

@@ -14,7 +14,9 @@ namespace MyRecipes.ViewModels
         public string Directions { get; set; }
         public DateTime? DateCreated { get; set; }
         public int Views { get; set; }
+        public List<RecipeLikeModel> RecipeLikes{ get; set; }
         public List<RecipeCommentModel> RecipeComments { get; set; }
         public SidebarData SidebarData { get; set; }
+        public RecipeLikeStatus LikeStatus { get; set; }
     }
 }

@@ -46,6 +46,12 @@ namespace MyRecipes
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("MyRecipesDemo")));
 
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<ContactUsInfo>(Configuration.GetSection("ContactUsInfo"));
@@ -75,6 +81,8 @@ namespace MyRecipes
             services.AddTransient<IRecipeCommentsRepository, RecipeCommentsRepository>();
             services.AddTransient<ILogsService, LogsService>();
             services.AddTransient<ILogsRepository, LogsRepository>();
+            services.AddTransient<IRecipeLikesService, RecipeLikesService>();
+            services.AddTransient<IRecipeLikesRepository, RecipeLikesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,6 +104,7 @@ namespace MyRecipes
             app.UseCookiePolicy();
             app.UseCustomExceptionHandler();
             app.UseAuthentication();
+            app.UseCors("CorsPolicy");
 
             app.UseMvc(routes =>
             {

@@ -18,5 +18,6 @@ namespace MyRecipes.Data
 
         public virtual List<RecipeComment> RecipeComments { get; set; }
         public virtual List<Log> Logs { get; set; }
+        public virtual List<RecipeLike> RecipeLikes { get; set; }
     }
 }
